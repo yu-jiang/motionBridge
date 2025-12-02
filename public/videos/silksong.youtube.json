@@ -1,0 +1,61 @@
+{
+  "videoFileName": "silksong.youtube",
+  "videoDuration": 113,
+  "videoEvents": [
+    {
+      "timeOffset": 1.513427734375,
+      "motion": "gesture_wave",
+      "behavior": "inherit",
+      "scale": 1,
+      "channel": 1,
+      "duration": 2.44,
+      "magnitude": 500,
+      "color": "#D95319",
+      "trackIndex": 0
+    },
+    {
+      "behavior": "replace",
+      "channel": 0,
+      "color": "#522F0A",
+      "duration": 1,
+      "magnitude": 300,
+      "motion": "sinewave",
+      "scale": 1,
+      "timeOffset": 4.0166015625,
+      "trackIndex": 1
+    },
+    {
+      "behavior": "replace",
+      "channel": 0,
+      "color": "#478CF5",
+      "duration": 1,
+      "magnitude": 600,
+      "motion": "vibration_fr_12hz",
+      "scale": 1,
+      "timeOffset": 5.144726574420929,
+      "trackIndex": 0
+    },
+    {
+      "behavior": "replace",
+      "channel": 0,
+      "color": "#D0E720",
+      "duration": 1,
+      "magnitude": 600,
+      "motion": "vibration_fl_12hz",
+      "scale": 1,
+      "timeOffset": 6.4619140625,
+      "trackIndex": 0
+    },
+    {
+      "behavior": "replace",
+      "channel": 0,
+      "color": "#00CCCC",
+      "duration": 0.04,
+      "magnitude": 300,
+      "motion": "frameCut",
+      "scale": 1,
+      "timeOffset": 0.787841796875,
+      "trackIndex": 0
+    }
+  ]
+}

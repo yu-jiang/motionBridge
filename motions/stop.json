@@ -1,0 +1,15 @@
+{
+    "id": "000",
+    "name": "stop",
+    "compositionDegree": 0,
+    "color": "#522F0A",
+    "shortDisplayName": "Stop",
+    "longDisplayName": "Stop",
+    "magnitude": 0,
+    "offset": 0,
+    "duration": 0.1,
+    "flShape": [0,0,0,0,0,0,0,0,0,0],
+    "frShape": [0,0,0,0,0,0,0,0,0,0],
+    "rlShape": [0,0,0,0,0,0,0,0,0,0],
+    "rrShape": [0,0,0,0,0,0,0,0,0,0]
+  }

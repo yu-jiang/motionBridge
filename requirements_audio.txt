@@ -1,0 +1,10 @@
+# install portaudio before installing PyAudio
+# beat detector dependencies using BeatNet
+
+PyAudio>=0.2.14
+
+librosa>=0.11.0
+
+BeatNet>=1.1.1
+
+madmom @ git+https://github.com/CPJKU/madmom.git

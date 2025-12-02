@@ -1,0 +1,28 @@
+{
+  "pose": [
+    "none",
+    "both_arms_out",
+    "bow",
+    "left_arm_out",
+    "right_arm_out",
+    "heart",
+    "hands_up",
+    "wave",
+    "clap",
+    "jump",
+    "stop"
+  ],
+  "hand": [
+    "none",
+    "thumb_down",
+    "thumb_up",
+    "stop",
+    "one_finger",
+    "two_fingers",
+    "three_fingers"
+  ],
+  "face": [
+    "none",
+    "smile"
+  ]
+}

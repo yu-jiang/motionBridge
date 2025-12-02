@@ -1,0 +1,61 @@
+{
+  "videoFileName": "sunrise.mp4",
+  "videoDuration": 10.01,
+  "videoEvents": [
+    {
+      "timeOffset": 0.0234375,
+      "motion": "carsfly_bass_effect1",
+      "behavior": "replace",
+      "scale": 1,
+      "channel": 0,
+      "duration": 2.19,
+      "color": "#4DBEEE",
+      "magnitude": 177,
+      "trackIndex": 0
+    },
+    {
+      "timeOffset": 2.294677734375,
+      "motion": "carsfly_bass_effect1",
+      "behavior": "replace",
+      "scale": 1,
+      "channel": 0,
+      "duration": 2.19,
+      "color": "#4DBEEE",
+      "magnitude": 177,
+      "trackIndex": 0
+    },
+    {
+      "timeOffset": 4.568115234375,
+      "motion": "carsfly_bass_effect1",
+      "behavior": "replace",
+      "scale": 1,
+      "channel": 0,
+      "duration": 2.19,
+      "color": "#4DBEEE",
+      "magnitude": 177,
+      "trackIndex": 0
+    },
+    {
+      "timeOffset": 6.849365234375,
+      "motion": "carsfly_bass_effect1",
+      "behavior": "replace",
+      "scale": 1,
+      "channel": 0,
+      "duration": 2.19,
+      "color": "#4DBEEE",
+      "magnitude": 177,
+      "trackIndex": 0
+    },
+    {
+      "timeOffset": 9.130615234375,
+      "motion": "carsfly_bass_effect1",
+      "behavior": "replace",
+      "scale": 1,
+      "channel": 0,
+      "duration": 2.19,
+      "color": "#4DBEEE",
+      "magnitude": 177,
+      "trackIndex": 0
+    }
+  ]
+}

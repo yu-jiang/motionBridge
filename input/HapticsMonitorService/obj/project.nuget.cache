@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "QVH/EsTMX9I=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mzhang\\Desktop\\motionbridge-core\\input\\HapticsMonitorService\\HapticsMonitorService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mzhang\\.nuget\\packages\\nefarius.vigem.client\\1.21.256\\nefarius.vigem.client.1.21.256.nupkg.sha512"
+  ],
+  "logs": []
+}

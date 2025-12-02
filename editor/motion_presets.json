@@ -1,0 +1,141 @@
+{
+    "cos_fl_12Hz": {
+        "type": "sine",
+        "name": "cos_fl_12Hz",
+        "parameters": {
+            "duration": 1,
+            "magnitude": 1,
+            "frequency": 12,
+            "direction": "fl",
+            "phase": 90
+        }
+    },
+    "cos_fr_12Hz": {
+        "type": "sine",
+        "name": "cos_fr_12Hz",
+        "parameters": {
+            "duration": 1,
+            "magnitude": 1,
+            "frequency": 12,
+            "direction": "fr",
+            "phase": 90
+        }
+    },
+    "head_down": {
+        "name": "head_down",
+        "parameters": {
+            "duration": 1,
+            "magnitude": 100,
+            "direction": "front",
+            "startValue": -1,
+            "endValue": -1
+        },
+        "type": "ramp"
+    },
+    "head_up": {
+        "name": "head_up",
+        "parameters": {
+            "duration": 1,
+            "magnitude": 100,
+            "direction": "front",
+            "startValue": 1,
+            "endValue": 1
+        },
+        "type": "ramp"
+    },
+    "nod_1": {
+        "type": "sine",
+        "name": "nod_1",
+        "parameters": {
+            "duration": 1,
+            "magnitude": 1,
+            "frequency": 0.5,
+            "direction": "front",
+            "phase": 180
+        }
+    },
+    "nod_2": {
+        "type": "composite",
+        "name": "nod_2",
+        "composition": {
+            "operation": "concat",
+            "motions": [
+                {
+                    "motionRef": "nod_1",
+                    "startTime": 0
+                },
+                {
+                    "motionRef": "nod_1",
+                    "startTime": 0
+                }
+            ]
+        }
+    },
+    "nod_3": {
+        "type": "composite",
+        "name": "nod_3",
+        "composition": {
+            "operation": "concat",
+            "motions": [
+                {
+                    "motionRef": "nod_2",
+                    "startTime": 0
+                },
+                {
+                    "motionRef": "nod_1",
+                    "startTime": 0
+                }
+            ]
+        }
+    },
+    "test_bezier": {
+        "name": "test_bezier",
+        "id": "1337",
+        "parameters": {
+            "anchors": [
+                {
+                    "id": "a_0",
+                    "x": 0.1640345982142857,
+                    "y": 0.29927884615384615,
+                    "angleIn": 0.9640884221481002,
+                    "angleOut": 0.9640884221481002
+                },
+                {
+                    "id": "a_772",
+                    "x": 0.3140345982142857,
+                    "y": -0.246875,
+                    "angleIn": 0.4533386958545628,
+                    "angleOut": 0.4533386958545628
+                },
+                {
+                    "id": "a_1",
+                    "x": 0.46492745535714286,
+                    "y": 0.1762019230769231,
+                    "angleIn": -1.2301800863765837,
+                    "angleOut": -1.2301800863765837
+                }
+            ],
+            "duration": 1,
+            "magnitude": 100,
+            "direction": "heave"
+        },
+        "type": "bezier_curve"
+    },
+    "test_composite": {
+        "type": "composite",
+        "name": "test_composite",
+        "composition": {
+            "operation": "add",
+            "motions": [
+                {
+                    "motionRef": "carsfly_bass_effect1",
+                    "startTime": 0
+                },
+                {
+                    "motionRef": "carsfly_bass_effect3",
+                    "startTime": 0
+                }
+            ]
+        }
+    }
+}

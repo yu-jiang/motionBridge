@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "start": "cd frontend && npm run concurrent",
+    "server": "python -m apps.motion_bridge",
+    "client": "cd frontend && npm start",
+    "haptics": "cd input && cd HapticsMonitorService && dotnet run",
+    "gamepad": ".\\output\\GamepadDriver\\x64\\Release\\GamepadDriver.exe -s",
+    "audio": "python -m input.audio.beat_detector.py",
+    "player": "python -m player.motion_player_main",
+    "player-test": "python -m player.motion_player_main -t bridge -m event",
+    "player-live": "python -m player.motion_player_main -t bridge -m live",
+    "player-gamepad": "python -m player.motion_player_main -t gamepad -m event",
+    "install": "pip install -r requirements_core.txt && cd frontend && npm install",
+    "i:py": "pip install -r requirements_core.txt",
+    "i:js": "cd frontend && npm install",
+    "i:audio": "pip install -r requirements_audio.txt"
+  }
+}
