@@ -188,9 +188,23 @@ Then, start GamepadDriver in MotionBridge webpage or run `npm run gamepad` to al
 
 ---
 
+## Acknowledgement
+
+This project is based on the following projects:
+
+- [BeatNet](https://github.com/mjhydri/BeatNet) for Audio Detection.
+- [Mediapipe](https://chuoling.github.io/mediapipe/) for Gesture Detection
+- [ViGemBus](https://github.com/nefarius/ViGEmBus) for Haptisc Detection
+
+Many thanks for your amazing works.
+
+---
+
 ## License
 
-MIT License.
+This project's original code is licensed under the MIT License. See [LICENSE](LICENSE).
+
+This project incorporates third-party code and assets under various licenses. See [ATTRIBUTIONS.md](ATTRIBUTIONS.md) for full details.
 
 ---
 
