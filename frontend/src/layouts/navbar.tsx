@@ -25,7 +25,7 @@ export default function NavBar() {
   };
   const { openWindow } = useWindow();
   return (
-    <nav className="navbar">
+    <nav className="navbar" style={{ overflowY: "auto" }}>
       <div className="nav-group">
         <div className="nav-group-title-big">Motion Bridge</div>
         <ul className="navbar-links">
@@ -134,6 +134,14 @@ export default function NavBar() {
             </NavLink>
           </li>
         </ul>
+      </div>
+      <div className="nav-group bottom">
+        <img
+          src="MotionBridge.png"
+          alt="Motion Bridge Logo"
+          style={{ width: "100%", marginTop: "1rem", borderRadius: "8px" }}
+          className="bottom"
+        />
       </div>
     </nav>
   );

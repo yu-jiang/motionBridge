@@ -15,8 +15,7 @@ export default function SplitView({
       <div
         style={{
           flex: "0 0 10%",
-          padding: "1rem",
-          overflowY: "auto",
+          padding: "1rem"
         }}
       >
         <NavBar />

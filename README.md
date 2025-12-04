@@ -39,6 +39,11 @@ Hardware-agnostic descriptions of motions (JSON format). Can be edited, simulate
 
 ---
 
+## MotionBridge Architecture
+![Input Signals -> MotionBridge -> MotionPlayer -> Outputs](diagram.png)
+
+---
+
 ## Updated Project Structure (Pending Edit)
 
 ```text
