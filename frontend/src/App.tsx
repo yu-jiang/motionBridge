@@ -5,12 +5,12 @@ import MotionComposerPage from "./pages/motionComposerPage";
 import MotionGeneratorPage from "./pages/motionGeneratorPage";
 import BezierCurveEditorPage from "./pages/bezierCurveEditorPage";
 import HomePage from "./pages/homePage";
-import VideoTrackPage from "./pages/videoTrackPage";
+import VideoMappingPage from "./pages/videoMappingPage";
 import { StatusProvider } from "./hooks/useStatus";
-import GestureTrackPage from "./pages/gestureTrackPage";
-import HapticsTrackPage from "./pages/hapticsTrackPage";
+import GestureMappingPage from "./pages/gestureMappingPage";
+import HapticsMappingPage from "./pages/hapticsMappingPage";
 import { MotionProvider } from "./hooks/useMotion";
-import AudioTrackPage from "./pages/audioTrackPage";
+import AudioMappingPage from "./pages/audioMappingPage";
 import OutputPage from "./pages/outputPage";
 import { WindowProvider } from "./hooks/useWindow";
 import { useState } from "react";
@@ -31,10 +31,10 @@ function App() {
                 <Route path="/generate" element={<MotionGeneratorPage />} />
                 <Route path="/compose" element={<MotionComposerPage />} />
                 <Route path="/bezier" element={<BezierCurveEditorPage />} />
-                <Route path="/haptics" element={<HapticsTrackPage />} />
-                <Route path="/video" element={<VideoTrackPage />} />
-                <Route path="/audio" element={<AudioTrackPage />} />
-                <Route path="/gesture" element={<GestureTrackPage />} />
+                <Route path="/haptics" element={<HapticsMappingPage />} />
+                <Route path="/video" element={<VideoMappingPage />} />
+                <Route path="/audio" element={<AudioMappingPage />} />
+                <Route path="/gesture" element={<GestureMappingPage />} />
               </Routes>
             </BrowserRouter>
           </WindowProvider>

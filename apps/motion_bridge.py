@@ -1,10 +1,10 @@
 from quart import Quart, request, websocket, jsonify
 from .motion_bridge_utils import *
 from .motion_editor import editor, presets, locks
-from .video_track_editor import video
-from .audio_track_editor import audio
+from .video_mapping_editor import video
+from .audio_mapping_editor import audio
 from .motion_jedi import jedi
-from jedi.jedi_utils import load_jedi_config, SPECIAL_GESTURES
+from input.jedi.jedi_utils import load_jedi_config, SPECIAL_GESTURES
 from jsonschema import validate, ValidationError
 from .schema import *
 from player.motion_player import MODE_LIST, TARGET_LIST, load_motion_lib
@@ -49,12 +49,12 @@ async def input_channel():
                 program = data["program"]
                 largeMotor = data["largeMotor"]
                 smallMotor = data["smallMotor"]
-                haptics = haptics_track_mapper.to_haptics(largeMotor=largeMotor, smallMotor=smallMotor)
-                motion, behavior, scale, channel = haptics_track_mapper.map_haptics_track(program=program, haptics=haptics)
+                haptics = haptics_mapper.to_haptics(largeMotor=largeMotor, smallMotor=smallMotor)
+                motion, behavior, scale, channel = haptics_mapper.map_haptics(program=program, haptics=haptics)
                 if not motion:
                     logger.info(f"[Input: {client_id}] New event detected. Now saving...")
-                    haptics_track_mapper.add_haptics_track(program=program, haptics=haptics)
-                    haptics_track_mapper.save_mapping()
+                    haptics_mapper.add_mapping(program=program, haptics=haptics)
+                    haptics_mapper.save_mapping()
             elif "timeOffset" in data:
                 validate(instance=data, schema=videoEventSchema)
                 motion = data["motion"]
@@ -62,7 +62,7 @@ async def input_channel():
                 scale = data["scale"]
                 channel = data["channel"]
             elif "beat" in data:
-                motion, behavior, scale, channel = audio_track_mapper.map_audio_track()
+                motion, behavior, scale, channel = audio_mapper.map_audio()
             
             if motion and behavior and scale:
                 await send_motion(motion, behavior, scale, channel)
@@ -275,14 +275,14 @@ async def restart_player():
         return jsonify({"message": "MotionPlayer is not running."})
 
 
-@bridge.route("/api/haptics-track", methods=["GET", "POST", "PUT", "DELETE"])
-async def haptics_track_api():
+@bridge.route("/api/haptics-mapping", methods=["GET", "POST", "PUT", "DELETE"])
+async def haptics_mapping_api():
     try:
         if request.method == "GET":
-            return jsonify(haptics_track_mapper.get_mapping())
+            return jsonify(haptics_mapper.get_mapping())
         elif request.method == "POST":
             data = await request.get_json(force=True, silent=True)
-            validate(instance=data, schema=hapticsTrackSchema)
+            validate(instance=data, schema=hapticsMappingSchema)
             program = data["program"]
             haptics_list = data["hapticsList"]
             for entry in haptics_list:
@@ -292,57 +292,57 @@ async def haptics_track_api():
                 scale = entry["scale"]
                 channel = entry["channel"]
                 alias = entry.get("alias", None)
-                error =  haptics_track_mapper.update_haptics_track(
+                error =  haptics_mapper.update_mapping(
                     program, haptics, motion, behavior, scale, channel, alias
                 )
                 if error:
-                    haptics_track_mapper.load_mapping()
+                    haptics_mapper.load_mapping()
                     return jsonify({"error": f"Invalid {error} mapped to haptics {haptics}"}), 400
-            haptics_track_mapper.save_mapping()
-            return jsonify(haptics_track_mapper.get_mapping())
+            haptics_mapper.save_mapping()
+            return jsonify(haptics_mapper.get_mapping())
         elif request.method == "PUT":
             data = await request.get_json(force=True, silent=True)
             logger.info(f"Received data for PUT: {data}")
             validate(instance=data, schema=hapticsEntrySchema)
             program = data["program"]
             haptics = data["haptics"]
-            haptics_track_mapper.delete_haptics_entry(program, haptics)
-            haptics_track_mapper.save_mapping()
-            return jsonify(haptics_track_mapper.get_mapping())
+            haptics_mapper.delete_haptics_entry(program, haptics)
+            haptics_mapper.save_mapping()
+            return jsonify(haptics_mapper.get_mapping())
         else:
             data = await request.get_json(force=True, silent=True)
-            validate(instance=data, schema=hapticsTrackSchema)
+            validate(instance=data, schema=hapticsMappingSchema)
             program = data["program"]
-            if not haptics_track_mapper.delete_haptics_track(program):
-                return jsonify({"error": f"Haptics track for program {program} not found."}), 404
-            haptics_track_mapper.save_mapping()
-            return jsonify(haptics_track_mapper.get_mapping())
+            if not haptics_mapper.delete_program_entry(program):
+                return jsonify({"error": f"Haptics map for program {program} not found."}), 404
+            haptics_mapper.save_mapping()
+            return jsonify(haptics_mapper.get_mapping())
     except ValidationError as ve:
         return jsonify({"error": f"Validation Error: {ve}."}), 400
     except Exception as e:
         logger.info(f"Unhandled error: {e}")
         return jsonify({"error": f"Unhandled error: {e}"}), 500
 
-@bridge.route("/api/gesture-track", methods=["GET", "POST"])
-async def gesture_track_api():
+@bridge.route("/api/gesture-mapping", methods=["GET", "POST"])
+async def gesture_mapping_api():
     try:
         if request.method == "GET":
-            return jsonify(gesture_track_mapper.get_mapping())
+            return jsonify(gesture_mapper.get_mapping())
         else:
             data = await request.get_json(force=True, silent=True)
-            validate(instance=data, schema=gestureTracksSchema)
+            validate(instance=data, schema=gestureMappingsSchema)
             for entry in data:
                 gesture = entry["gesture"]
                 motion = entry["motion"]
                 behavior = entry["behavior"]
                 frames = entry["frames"]
                 channel = entry["channel"]
-                error = gesture_track_mapper.update_gesture_track(gesture, motion, behavior, frames, channel)
+                error = gesture_mapper.update_mapping(gesture, motion, behavior, frames, channel)
                 if error:
-                    gesture_track_mapper.load_mapping()
+                    gesture_mapper.load_mapping()
                     return jsonify({"error": f"Invalid {error}. Gesture: {gesture}"}), 400
-            gesture_track_mapper.save_mapping()
-            return jsonify(gesture_track_mapper.get_mapping())
+            gesture_mapper.save_mapping()
+            return jsonify(gesture_mapper.get_mapping())
     except ValidationError as ve:
         return jsonify({"error": f"Validation Error: {ve}."}), 400
     except Exception as e:
@@ -361,9 +361,9 @@ async def reload_api():
     Reload all mappings from config files and update motion player status.
     """
     try:
-        haptics_track_mapper.load_mapping()
-        audio_track_mapper.load_mapping()
-        gesture_track_mapper.load_mapping()
+        haptics_mapper.load_mapping()
+        audio_mapper.load_mapping()
+        gesture_mapper.load_mapping()
         presets.load_mapping()
         locks.load_locks()
         load_jedi_config()

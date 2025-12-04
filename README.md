@@ -25,7 +25,7 @@ A subdivision of Motion Bridge that edits motion specifically.
 
 Modular sources of events or signals: camera gestures, haptics data, etc.
 
-- **Motion Tracks**
+- **Motion Mappings**
 
 Convert various input types into motion primitives or force commands.
 
@@ -40,7 +40,7 @@ Hardware-agnostic descriptions of motions (JSON format). Can be edited, simulate
 ---
 
 ## MotionBridge Architecture
-![Input Signals -> MotionBridge -> MotionPlayer -> Outputs](diagram.png)
+![Input Signals -> MotionBridge -> MotionPlayer -> Outputs](docs/image/diagram.png)
 
 ---
 
@@ -51,8 +51,8 @@ motionbridge-core/
 ├── apps/
 │   ├── motion_bridge.py          # Motion bridge app entry point
 │   ├── motion_bridge_utils.py    # Motion bridge properties and methods
-│   ├── motion_jedi.py            # Gesture related routes
-│   ├── video_track_editor.py     # Video related routes
+│   ├── jedi_mapping_editor.py            # Gesture related routes
+│   ├── video_mapping_editor.py     # Video related routes
 │   └── motion_editor.py          # Motion editor routes
 │
 ├── frontend/               # React frontend for the server
@@ -70,9 +70,9 @@ motionbridge-core/
 │
 ├── public/                 # Large media files for displaying MotionBridge utilities
 │   ├── audios              # Saved audios
-│   └── videos/             # Saved videos, along with corresponding motion tracks
+│   └── videos/             # Saved videos, along with corresponding motion mappings
 │
-├── editor/                 # Motion Editor Utilities
+├── editor_utils/                 # Motion Editor Utilities
 │   ├── motion_locks.py     # Motion library safety lock system
 │   └── motion_presets.py   # Saved motion generation parameters
 │
@@ -80,19 +80,21 @@ motionbridge-core/
 │
 ├── motions/                # Motion library
 │
-├── tracks/                 # Motion tracks that map input to motions
+├── mappings/                 # Motion mappings that map input to motions
 │
 ├── player/                 # Motion player
 │   ├── motion_player_main.py    # Main motion player program and controller
 │   ├── motion_player.py         # Motion player model
 │   └── player_utils.py          # Motion player utilities
 │
-├── logs/                   # Motion Player logging
-│
 ├── input/                  # Drivers for input services
-│   ├── HapticsMonitorService/   # Capture haptics input from local machine and send them to motionbridge
-│   └── audio
-│       └── beat_detector.py     # Extract beat from system audio live
+│   ├── HapticsMonitorService/   # Capture haptics input from system and send them to motionbridge
+│   ├── audio
+│   │   └── beat_detector.py     # Extract live beat from system audio
+│   └── jedi/
+│       ├── models/             # Trained gesture recognition models
+│       ├── gestureClassifier.py
+│       └── jedi_utils.py       # jedi helper functions
 │
 ├── output/                 # Drivers for output devices
 │   ├── bridge_driver.py    # Send motionplayer force signals back to motionbridge and frontend ui
@@ -100,10 +102,6 @@ motionbridge-core/
 │   ├── gamepad_driver.py   # Send force signal to GamepadDriver
 │   └── GamepadDriver/      # Second Layer C++ Driver that sends force signals to connected gamepads
 │
-├── jedi/
-│   ├── models/             # Trained gesture recognition models
-│   ├── gestureClassifier.py
-│   └── jedi_utils.py       # jedi helper functions
 │
 ├── package.json            # App shortcuts
 │
@@ -111,7 +109,7 @@ motionbridge-core/
 │
 ├── requirements_jedi.txt   # Extra python dependencies for training gesture models
 │
-├── requirements_audio.txt  # Extra python dependencies for using audio track
+├── requirements_audio.txt  # Extra python dependencies for using audio input
 │
 └── README.md
 ```
@@ -168,7 +166,7 @@ Modes:
 
 For some inputs or outputs, you need some extra steps to set up a driver before using them.
 
-**Haptics Monitor (Haptics Track)**
+**Haptics Monitor (Haptics Mapping)**
 
 This program is only compatible with Windows. It relies on [ViGemBus](https://github.com/nefarius/ViGEmBus), a virtual gamepad driver for Windows system.
 
@@ -176,7 +174,7 @@ You can run it from frontend or by command `npm run haptics`.
 
 It detects every haptics signal and identifies the owner of the current active window as the signal source. This method is deflected and could make mistakes.
 
-**Beat Detector (Audio Track)**
+**Beat Detector (Audio Mapping)**
 
 First, you need to install [PortAudio](https://www.portaudio.com/). Installation varies across different OS.
 

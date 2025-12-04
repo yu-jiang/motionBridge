@@ -3,8 +3,8 @@ from .motion_bridge_utils import *
 import json
 import time
 import numpy as np
-from jedi.gestureClassifier import load_models
-from jedi.jedi_utils import extract_pose_features, check_ready_state, liveForceGenerator, update_jedi_state
+from input.jedi.gestureClassifier import load_models
+from input.jedi.jedi_utils import extract_pose_features, check_ready_state, liveForceGenerator, update_jedi_state
 
 jedi = Blueprint('jedi', __name__)
 
@@ -169,14 +169,14 @@ async def jedi_channel():
                     total_inference_time = mediapipe_time + inference_time
                     # logger.info("Detected %s gesture: %s (model inference: %.2fms, total inference: %.2fms)", model_type, detected_gesture, inference_time, total_inference_time)
 
-                    if detected_gesture not in gesture_track_mapper.mapping:
+                    if detected_gesture not in gesture_mapper.mapping:
                         matched_gesture = "unknown"
                         current_count = 0
                         required_frames = 0
                         gesture_counter.clear()
                     else:
                         matched_gesture = detected_gesture
-                        required_frames = gesture_track_mapper.mapping[detected_gesture].get('frames', 3)
+                        required_frames = gesture_mapper.mapping[detected_gesture].get('frames', 3)
                         if matched_gesture == last_matched_gesture:
                             gesture_counter[matched_gesture] = gesture_counter.get(matched_gesture, 0) + 1
                         else:
@@ -202,7 +202,7 @@ async def jedi_channel():
                         if result == None:
                             continue # cannot recognize gesture from current landmarks
                         if result == matched_gesture: # gesture confirmed
-                            motion, behavior, _, channel = gesture_track_mapper.map_gesture_track(matched_gesture)
+                            motion, behavior, _, channel = gesture_mapper.map_gesture(matched_gesture)
                             await send_motion(motion, behavior, 1, channel)
                         else: # gesture indicates mode change
                             new_mode = result
@@ -240,7 +240,6 @@ async def jedi_channel():
         logger.info("[Jedi] Error: %s", e)
     finally:
         latest_is_ready_flag = False
-        await send_status_update(mode="off")
         input_clients.remove(client)
         output_clients.remove(client)
         await broadcast_status()

@@ -2,9 +2,9 @@ import { useState } from "react";
 import {
   uploadVideoFile,
   uploadYouTubeVideo,
-} from "../services/videoTrackService";
+} from "../services/videoMappingService";
 import { NAME_REGEX, YOUTUBE_REGEX } from "../shared";
-import { YoutubeVideoPayload } from "../shared/video.track.type";
+import { YoutubeVideoPayload } from "../shared/video.map.type";
 import useMessage from "../hooks/useMessage";
 import useRefresh from "../hooks/useRefresh";
 

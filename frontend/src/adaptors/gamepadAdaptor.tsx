@@ -5,7 +5,7 @@ export default function GamepadAdaptor() {
       <h3>Requirements</h3>
       <ul>
         <li>Windows only.</li>
-        <li>This outupt does not work with game track.</li>
+        <li>This outupt does not work with game mapping.</li>
         <li>Gamepad driver (Output Target) is up and running.</li>
       </ul>
       <span>

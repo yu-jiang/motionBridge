@@ -66,7 +66,7 @@ export default function NavBar() {
             </NavLink>
           </li>
         </ul>
-        <div className="nav-group-title-big">Input Tracks</div>
+        <div className="nav-group-title-big">Input Mappings</div>
         <ul className="navbar-links">
           <li>
             <NavLink to="/haptics" className="nav-link">
@@ -87,11 +87,11 @@ export default function NavBar() {
             {pathname === "/gesture" ? (
               <>
                 <NavLink
-                  to="?p=gesture-track"
+                  to="?p=gesture-mapping"
                   end
-                  className={isActive("gesture-track", true)}
+                  className={isActive("gesture-mapping", true)}
                 >
-                  Gesture Track
+                  Gesture Mapping
                 </NavLink>
                 <NavLink
                   to="?p=gesture-input"

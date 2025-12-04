@@ -1,14 +1,14 @@
 import { useState } from "react";
 import MotionSearch from "../components/motionSearch";
 import { useWindow } from "../hooks/useWindow";
-import CarSimulation from "../jsx/carSimulation";
+import CarSimulation from "../components/carSimulation";
 import { playMotionByName } from "../services/motionEditorService";
 import { MessageContext } from "../hooks/useMessage";
 import StatusBar from "../components/statusBar";
 import useStatus from "../hooks/useStatus";
 import { MotionPlayerPanel } from "../components/motionPlayerPanel";
 import Message from "../components/message";
-import WheelSimulation from "../jsx/wheelSimulation";
+import WheelSimulation from "../components/wheelSimulation";
 import TrifoldView from "../layouts/trifoldView";
 
 export default function OutputPage() {
@@ -32,6 +32,10 @@ export default function OutputPage() {
 
             <div className="flex-col">
               <h2>Try with a motion!</h2>
+              <div>
+                Ensure MotionPlayer is connected, mode is event, target is
+                bridge, and target is connected.
+              </div>
               <MotionSearch value={motionName} onChange={setMotionName} />
 
               <button
@@ -44,10 +48,6 @@ export default function OutputPage() {
               >
                 Play Motion
               </button>
-              <div className="gray">
-                Ensure MotionPlayer is connected, mode is event, target is
-                bridge, and target is connected.
-              </div>
             </div>
           </div>
         }

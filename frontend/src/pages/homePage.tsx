@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Message from "../components/message";
-import CarSimulation from "../jsx/carSimulation";
 import { MessageContext } from "../hooks/useMessage";
 import SplitView from "../layouts/splitView";
 import { MotionBridgePanel } from "../components/motionBridgePanel";

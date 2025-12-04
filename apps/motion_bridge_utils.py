@@ -1,6 +1,6 @@
-from tracks.haptics_track_mapper import HapticsTrackMapper
-from tracks.gesture_track_mapper import GestureTrackMapper
-from tracks.audio_track_mapper import AudioTrackMapper
+from mappings.haptics_mapper import HapticsMapper
+from mappings.gesture_mapper import GestureMapper
+from mappings.audio_mapper import AudioMapper
 from player.motion_player import MODE_LIST, TARGET_LIST
 import logging
 from .schema import *
@@ -16,9 +16,9 @@ __all__ = [
     "input_clients",
     "output_clients",
     "status_clients",
-    "haptics_track_mapper",
-    "gesture_track_mapper",
-    "audio_track_mapper",
+    "haptics_mapper",
+    "gesture_mapper",
+    "audio_mapper",
     "adapt_motion",
     "adapt_signal",
     "set_target_adaptors",
@@ -64,9 +64,9 @@ player_clients = set()
 input_clients = set()
 output_clients = set()
 status_clients = set()
-haptics_track_mapper = HapticsTrackMapper()
-gesture_track_mapper = GestureTrackMapper()
-audio_track_mapper = AudioTrackMapper()
+haptics_mapper = HapticsMapper()
+gesture_mapper = GestureMapper()
+audio_mapper = AudioMapper()
 
 adaptor_name = None
 adapt_motion = None

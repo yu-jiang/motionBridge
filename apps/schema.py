@@ -20,13 +20,13 @@ __all__ = [
     "bakedBezierCurveMotionSchema",
     "bezierCurveMotionSchema",
     "hapticsInputSchema",
-    "motionTrackSchema",
-    "hapticsTrackSchema",
+    "motionMappingSchema",
+    "hapticsMappingSchema",
     "hapticsEntrySchema",
-    "gestureTracksSchema",
+    "gestureMappingsSchema",
     "renameSchema",
     "videoEventSchema",
-    "videoTrackSchema",
+    "videoMappingSchema",
     "youtubeVideoSchema",
     ]
 
@@ -311,7 +311,7 @@ hapticsInputSchema = {
     "required": ["program", "largeMotor", "smallMotor"]
 }
 
-motionTrackSchema = {
+motionMappingSchema = {
     "type": "object",
     "properties": {
         "motion": { "type": "string", "pattern": NAME_REGEX },
@@ -322,7 +322,7 @@ motionTrackSchema = {
     "required": ["motion", "behavior", "scale", "channel"]
 }
 
-hapticsTrackSchema = {
+hapticsMappingSchema = {
     "type": "object",
     "properties": {
         "program": { "type": "string" },
@@ -376,7 +376,7 @@ videoEventSchema = {
     "required": ["motion", "behavior", "scale", "channel", "timeOffset", "duration", "magnitude", "color"]
 }
 
-videoTrackSchema = {
+videoMappingSchema = {
     "type": "object",
     "properties": {
         "videoFileName": { "type": "string" },
@@ -397,7 +397,7 @@ youtubeVideoSchema = {
     },
 }
 
-gestureTrackSchema = {
+gestureMappingSchema = {
     "type": "object",
     "properties": {
         "gesture": { "type": "string", "pattern": NAME_REGEX },
@@ -409,9 +409,9 @@ gestureTrackSchema = {
     "required": ["gesture", "motion", "behavior", "frames", "channel"]
 }
 
-gestureTracksSchema = {
+gestureMappingsSchema = {
     "type": "array",
-    "items": gestureTrackSchema
+    "items": gestureMappingSchema
 }
 
 renameSchema = {

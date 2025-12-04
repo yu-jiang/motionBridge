@@ -6,8 +6,8 @@ import json
 import logging
 from pathlib import Path
 from player.motion_player import load_motion_lib, load_motion
-from editor.motion_presets import MotionPresets, MOTION_TYPES
-from editor.motion_locks import MotionLocks
+from editor_utils.motion_presets import MotionPresets, MOTION_TYPES
+from editor_utils.motion_locks import MotionLocks
 
 editor = Blueprint("users", __name__)
 
