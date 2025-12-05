@@ -213,5 +213,5 @@ This project incorporates third-party code and assets under various licenses. Se
 
 ## Contact
 
-Maintained by ClearMotion, Inc.
-Part of the CineMotion / RoadMotion initiative.
+Maintained by Yu Jiang and Ocean Zhang in a personal capacity.
+

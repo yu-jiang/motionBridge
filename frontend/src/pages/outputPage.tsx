@@ -58,7 +58,7 @@ export default function OutputPage() {
               <CarSimulation />
               <div>
                 MotionBridge and MotionPlayer are originally designed for{" "}
-                <strong>ClearMotion</strong>, our intelligent proactive
+                <strong>ClearMotion 1</strong>, an intelligent proactive
                 suspension system.
               </div>
             </div>
