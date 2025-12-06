@@ -1,0 +1,73 @@
+.motion-combobox {
+  position: relative;
+}
+
+.motion-combobox__clear {
+  position: absolute;
+  right: 4px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+}
+
+.motion-combobox__filters {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 2px;
+}
+
+.motion-combobox__filters button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #888;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.motion-combobox__filters button.active {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.motion-combobox__listbox {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  max-height: 180px;
+  overflow-y: auto;
+  margin-top: 2px;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.motion-combobox__option {
+  padding: 4px 6px;
+  font-size: 0.85rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.motion-combobox__option.is-active {
+  background: #f0f7ff;
+}
+
+.motion-combobox__status {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  margin-top: 2px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 6px;
+  font-size: 0.85rem;
+}

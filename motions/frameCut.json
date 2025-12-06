@@ -1,0 +1,11 @@
+{
+    "name": "frameCut",
+    "shortDisplayName": "Cut",
+    "longDisplayName": "Segmentation Cut",
+    "color": "#00CCCC",
+    "magnitude": 300,
+    "flShape": [1,0,0,0],
+    "frShape": [1,0,0,0],
+    "rlShape": [1,0,0,0],
+    "rrShape": [1,0,0,0]
+}

@@ -1,0 +1,6 @@
+{
+    "motion": "wavebeatRight",
+    "behavior": "replace",
+    "scale": 0.5,
+    "channel": 1
+}

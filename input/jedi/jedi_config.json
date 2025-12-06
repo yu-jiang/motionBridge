@@ -1,0 +1,32 @@
+{
+  "heave_filter": {
+    "b": [3.2081, -6.2836, 3.0897],
+    "a": [1.0, -1.7935, 0.8077]
+  },
+  "pitch_filter": {
+    "b0": [1.7842, -3.4662, 1.6962],
+    "b": [2.23025, -4.33275, 2.12025],
+    "a": [1.0, -1.7935, 0.8077]
+  },
+  "roll_filter": {
+    "b": [1.0],
+    "a": [1.0]
+  },
+  "kalman_force_q": 10,
+  "kalman_force_r": 100,
+  "horizontal_bins": {
+    "num_bins": 10,
+    "mask_edges": true
+  },
+  "live_force_scale": 0.5,
+  "gesture_force_scale": 1.0,
+  "scaling_param": 0.001,
+  "gesture_settings": {
+    "num_of_last_gestures": 1,
+    "warm_up": "bow",
+    "start": "both_arms_out",
+    "stop": "stop",
+    "activate": "wave",
+    "deactivate": "bow"
+  }
+}

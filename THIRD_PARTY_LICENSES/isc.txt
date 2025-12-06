@@ -1,0 +1,1 @@
+ISC license is used by some dependencies such as librosa. Refer to the upstream project for the authoritative license text.
