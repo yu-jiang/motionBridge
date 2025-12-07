@@ -4,6 +4,31 @@
 
 ---
 
+## Demos
+
+### Overview Video
+
+[![MotionBridge Overview](https://img.youtube.com/vi/uY4mLN2Ui4U/hqdefault.jpg)](https://youtu.be/uY4mLN2Ui4U?si=ybpV0BPzUzBu3Kyy)
+
+_Click to watch the MotionBridge overview on YouTube._
+
+### MotionBridge Logo
+
+![MotionBridge Logo](docs/gif/motionBridgeLogo.gif)
+
+### Feature Demos
+
+#### Gaming: Events to Car Motion
+
+![Gaming Demo – Events to Car Motion](docs/gif/MotionBridge_Demo_Game_events_to_car_motion.gif)
+
+#### Other Demos
+
+![DIY Toy Car Reacts to Human Gestures](docs/gif/MotionBridge_Demo_DIY_toy_car_reacts_to_human_gestures.gif)
+![Human Gestures to Car Motion](docs/gif/MotionBridge_Demo_Human_gestures_to_car_motion.gif)
+
+---
+
 ## Key Concepts
 
 - **Motion Bridge**
