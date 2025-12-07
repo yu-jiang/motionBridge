@@ -8,11 +8,11 @@
 
 ### Overview Video
 
-[![MotionBridge Overview](docs/image/motionbridge_video_thumb.png)](https://youtu.be/uY4mLN2Ui4U?si=ybpV0BPzUzBu3Kyy)
+[![MotionBridge Overview](docs/image/motionbridge_video_thumb_youtube.png)](https://youtu.be/uY4mLN2Ui4U?si=ybpV0BPzUzBu3Kyy)
 
 _Click to watch the MotionBridge overview on YouTube._
 
-[![MotionBridge Overview](docs/image/motionbridge_video_thumb.png)](https://www.bilibili.com/video/BV1dm2pBrEzf/?share_source=copy_web&vd_source=629ad16bff51ddda62d7fabc3f71702a)
+[![MotionBridge Overview](docs/image/motionbridge_video_thumb_bilibili.png)](https://www.bilibili.com/video/BV1dm2pBrEzf/?share_source=copy_web&vd_source=629ad16bff51ddda62d7fabc3f71702a)
 
 _Click to watch the MotionBridge overview on Bilibili._
 
