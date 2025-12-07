@@ -8,11 +8,11 @@
 
 ### Overview Video
 
-[![MotionBridge Overview](docs/image/motionbridge_video_thumb_youtube.png)](https://youtu.be/uY4mLN2Ui4U?si=ybpV0BPzUzBu3Kyy)
+[![MotionBridge Overview](docs/image/motionbridge_video_cover_youtube.png)](https://youtu.be/uY4mLN2Ui4U?si=ybpV0BPzUzBu3Kyy)
 
 _Click to watch the MotionBridge overview on YouTube._
 
-[![MotionBridge Overview](docs/image/motionbridge_video_thumb_bilibili.png)](https://www.bilibili.com/video/BV1dm2pBrEzf/?share_source=copy_web&vd_source=629ad16bff51ddda62d7fabc3f71702a)
+[![MotionBridge Overview](docs/image/motionbridge_video_cover_bilibili.png)](https://www.bilibili.com/video/BV1dm2pBrEzf/?share_source=copy_web&vd_source=629ad16bff51ddda62d7fabc3f71702a)
 
 _Click to watch the MotionBridge overview on Bilibili._
 
@@ -23,7 +23,7 @@ _Click to watch the MotionBridge overview on Bilibili._
 
 ![Gaming Demo](docs/gif/demo_gaming_to_car.gif)
 
-#### Gesture to Arduino
+#### Gesture to a DIY Arduino model
 
 ![Gesture to Arduino Demo](docs/gif/demo_gesture_to_arduino.gif)
 
@@ -31,7 +31,7 @@ _Click to watch the MotionBridge overview on Bilibili._
 
 ![Gesture to Car Demo](docs/gif/demo_gesture_to_car.gif)
 
-#### Karaoke
+#### Karaoke in Car
 
 ![Karaoke Demo](docs/gif/demo_Karaoke.gif)
 
