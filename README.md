@@ -21,15 +21,27 @@ _Click to watch the MotionBridge overview on Bilibili._
 
 #### Gaming
 
-![Gaming Demo – Events to Car Motion](docs/gif/MotionBridge_Demo_Game_events_to_car_motion.gif)
+![Gaming Demo](docs/gif/demo_gaming_to_car.gif)
 
-#### Gesture
+#### Gesture to Arduino
 
-![Human Gestures to Car Motion](docs/gif/MotionBridge_Demo_Human_gestures_to_car_motion.gif)
+![Gesture to Arduino Demo](docs/gif/demo_gesture_to_arduino.gif)
 
-#### Arduino Toy
+#### Gesture to Car
 
-![DIY Toy Car Reacts to Human Gestures](docs/gif/MotionBridge_Demo_DIY_toy_car_reacts_to_human_gestures.gif)
+![Gesture to Car Demo](docs/gif/demo_gesture_to_car.gif)
+
+#### Karaoke
+
+![Karaoke Demo](docs/gif/demo_Karaoke.gif)
+
+#### Live Beats to Car
+
+![Live Beats to Car Demo](docs/gif/demo_live_beats_to_car.gif)
+
+#### Video Motion Track to Car
+
+![Video Motion Track to Car Demo](docs/gif/demo_video_motion_track_to_car.gif)
 
 
 ---
