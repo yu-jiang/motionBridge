@@ -14,9 +14,13 @@
 
 _Click to watch the MotionBridge overview on YouTube._
 
-### MotionBridge Logo
+[![MotionBridge Overview](docs/image/motionbridge-bilibili-thumb.png)](https://www.bilibili.com/video/BV1dm2pBrEzf/?share_source=copy_web&vd_source=629ad16bff51ddda62d7fabc3f71702a)
 
-![MotionBridge Logo](docs/gif/motionBridgeLogo.gif)
+_Click to watch the MotionBridge overview on Bilibili._
+
+
+【Intro to MotionBridge】 
+
 
 ### Feature Demos
 
