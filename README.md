@@ -1,7 +1,5 @@
 # MotionBridge
 
-![MotionBridge Logo](docs/gif/motionBridgeLogo.gif)
-
 **MotionBridge** is the foundation of a modular system that connects digital events—whether from games, media, or live sensors—to real-world motion outputs such as vehicle actuators, moving seats, or DIY hardware. This repository defines the core architecture, runtime system, mapping logic, and hardware interfaces that convert semantic or continuous input into physical motion.
 
 ---
@@ -10,28 +8,29 @@
 
 ### Overview Video
 
-[![MotionBridge Overview](https://img.youtube.com/vi/uY4mLN2Ui4U/hqdefault.jpg)](https://youtu.be/uY4mLN2Ui4U?si=ybpV0BPzUzBu3Kyy)
+[![MotionBridge Overview](docs/image/motionbridge_video_thumb.png)](https://youtu.be/uY4mLN2Ui4U?si=ybpV0BPzUzBu3Kyy)
 
 _Click to watch the MotionBridge overview on YouTube._
 
-[![MotionBridge Overview](docs/image/motionbridge-bilibili-thumb.png)](https://www.bilibili.com/video/BV1dm2pBrEzf/?share_source=copy_web&vd_source=629ad16bff51ddda62d7fabc3f71702a)
+[![MotionBridge Overview](docs/image/motionbridge_video_thumb.png)](https://www.bilibili.com/video/BV1dm2pBrEzf/?share_source=copy_web&vd_source=629ad16bff51ddda62d7fabc3f71702a)
 
 _Click to watch the MotionBridge overview on Bilibili._
 
 
-【Intro to MotionBridge】 
-
-
 ### Feature Demos
 
-#### Gaming: Events to Car Motion
+#### Gaming
 
 ![Gaming Demo – Events to Car Motion](docs/gif/MotionBridge_Demo_Game_events_to_car_motion.gif)
 
-#### Other Demos
+#### Gesture
+
+![Human Gestures to Car Motion](docs/gif/MotionBridge_Demo_Human_gestures_to_car_motion.gif)
+
+#### Arduino Toy
 
 ![DIY Toy Car Reacts to Human Gestures](docs/gif/MotionBridge_Demo_DIY_toy_car_reacts_to_human_gestures.gif)
-![Human Gestures to Car Motion](docs/gif/MotionBridge_Demo_Human_gestures_to_car_motion.gif)
+
 
 ---
 
@@ -246,3 +245,6 @@ attributions and links to license texts, are documented in
 ## Contact
 
 Maintained by Yu Jiang and Ocean Zhang in a personal capacity.
+
+
+![MotionBridge Logo](docs/gif/motionBridgeLogo.gif)
