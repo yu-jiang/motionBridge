@@ -1,5 +1,7 @@
 # MotionBridge
 
+![MotionBridge Logo](docs/gif/motionBridgeLogo.gif)
+
 **MotionBridge** is the foundation of a modular system that connects digital events—whether from games, media, or live sensors—to real-world motion outputs such as vehicle actuators, moving seats, or DIY hardware. This repository defines the core architecture, runtime system, mapping logic, and hardware interfaces that convert semantic or continuous input into physical motion.
 
 ---
