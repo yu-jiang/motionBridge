@@ -1,0 +1,63 @@
+.videoContainer {
+  width: 700px;
+  text-align: center;
+  float: left;
+}
+
+.timeline {
+  width: 700px;
+  margin-top: 15px;
+  white-space: nowrap;
+  overflow-x: scroll;
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.gridMarker {
+  border-left: 2px #777777 solid;
+  color: #777777;
+  background-color: #dddddd;
+  display: inline-block;
+}
+
+.playHead {
+  position: absolute;
+  top: 0px;
+  width: 4px;
+  background-color: #00cc00;
+}
+
+.segment {
+  position: absolute;
+  background-color: #ff88ff;
+  overflow-x: hidden;
+  height: 20px;
+}
+
+.videoEvent {
+  position: absolute;
+  background-color: #ff8800;
+  overflow-x: hidden;
+  cursor: pointer;
+}
+
+.videoEvent.selected {
+  border: 2px solid #00ff75;
+}
+
+.eventTab {
+  position: absolute;
+  background-color: #666666;
+  cursor: col-resize;
+}
+
+.waveformCanvas {
+  position: absolute;
+  top: 30px;
+  background-color: #ffffff;
+}

@@ -1,0 +1,1 @@
+LGPL-2.1-or-later is used by websocket-client. Refer to the upstream project for the authoritative license text.

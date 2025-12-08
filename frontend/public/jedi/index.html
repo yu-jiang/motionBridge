@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #controls {
+        margin: 10px 0;
+      }
+      #canvas-container {
+        position: relative;
+        width: 800px;
+        height: 450px;
+      }
+      #output_canvas,
+      #force_canvas {
+        border: 1px solid #000;
+      }
+      #countdown {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 48px;
+        color: red;
+        display: none;
+      }
+      #status-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      #status,
+      #mode-status {
+        padding: 10px 20px;
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 5px;
+        text-align: center;
+      }
+      .status-connected {
+        background-color: rgba(0, 255, 0, 0.2);
+        border: 2px solid green;
+        color: green;
+      }
+      .status-disconnected {
+        background-color: rgba(255, 0, 0, 0.2);
+        border: 2px solid red;
+        color: red;
+      }
+      .mode-gesture {
+        background-color: rgba(0, 0, 255, 0.2);
+        border: 2px solid blue;
+        color: blue;
+      }
+      .mode-follower {
+        background-color: rgba(0, 255, 0, 0.2);
+        border: 2px solid green;
+        color: green;
+      }
+      .mode-not_ready {
+        background-color: rgba(255, 0, 0, 0.2);
+        border: 2px solid red;
+        color: red;
+      }
+      .mode-inactive {
+        background-color: rgba(255, 255, 0, 0.2);
+        border: 2px solid orange;
+        color: orange;
+      }
+      #gesture-display {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .gesture-incomplete {
+        color: #cccccc;
+      } /* Light gray for readability */
+      .gesture-complete {
+        color: #00ff00;
+      } /* Bright green for completed gestures */
+      button {
+        margin: 5px;
+      }
+      .recording-hint {
+        border: 3px solid green;
+      }
+      #legend {
+        margin: 10px;
+        font-family: Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="controls">
+      <select id="model-selector"></select>
+      <select id="label-selector"></select>
+      <select id="frequency-selector">
+        <option value="1000">Every 1s</option>
+        <option value="3000">Every 3s</option>
+        <option value="5000">Every 5s</option>
+      </select>
+      <button id="record-btn">Start Recording</button>
+      <button id="save-btn" disabled>Save Data</button>
+    </div>
+    <div id="canvas-container">
+      <video class="input_video" style="display: none"></video>
+      <canvas
+        id="output_canvas"
+        class="output_canvas"
+        width="800"
+        height="450"
+      ></canvas>
+      <div id="countdown"></div>
+      <div id="status-container">
+        <div id="status" class="status-disconnected">Not connected</div>
+        <div id="mode-status" class="mode-gesture">Gesture Mode</div>
+      </div>
+      <div id="gesture-display">
+        <span id="detected-gesture"
+          >Detected Gesture: none (inference time: 0ms)</span
+        >
+        <span id="matched-gesture">Matched Gesture: none (0/0)</span>
+        <span id="previous-gesture">Previous Gesture: none</span>
+      </div>
+    </div>
+    <div id="force-container">
+      <canvas id="force_canvas" width="800" height="400"></canvas>
+      <div id="legend">
+        <span style="color: red">FL</span> |
+        <span style="color: green">FR</span> |
+        <span style="color: blue">RL</span> |
+        <span style="color: purple">RR</span>
+      </div>
+      <div id="controls">
+        <label
+          >Y-Axis Range:
+          <input
+            type="number"
+            id="yMin"
+            value="-2"
+            step="0.1"
+            oninput="updateRange()"
+          />
+          to
+          <input
+            type="number"
+            id="yMax"
+            value="2"
+            step="0.1"
+            oninput="updateRange()"
+          />
+        </label>
+        <label
+          >X-Axis Time (s):
+          <input
+            type="number"
+            id="xTime"
+            value="2"
+            step="0.1"
+            min="0.1"
+            oninput="updateTime()"
+          />
+        </label>
+      </div>
+    </div>
+
+    <script type="module">
+      const videoElement = document.getElementsByClassName("input_video")[0];
+      const canvasElement = document.getElementById("output_canvas");
+      const canvasCtx = canvasElement.getContext("2d");
+      const forceCanvas = document.getElementById("force_canvas");
+      const forceCtx = forceCanvas.getContext("2d");
+      const modelSelector = document.getElementById("model-selector");
+      const labelSelector = document.getElementById("label-selector");
+      const frequencySelector = document.getElementById("frequency-selector");
+      const recordBtn = document.getElementById("record-btn");
+      const saveBtn = document.getElementById("save-btn");
+      const status = document.getElementById("status");
+      const modeStatus = document.getElementById("mode-status");
+      const countdownElement = document.getElementById("countdown");
+      const detectedGestureSpan = document.getElementById("detected-gesture");
+      const matchedGestureSpan = document.getElementById("matched-gesture");
+      const previousGestureSpan = document.getElementById("previous-gesture");
+
+      // Prevent 'z' keypress from triggering unwanted behavior
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "z") {
+          event.preventDefault();
+        }
+      });
+
+      // WebSocket setup
+      const socket = new WebSocket("ws://localhost:6789/jedi?client=jedi");
+      socket.onopen = () => {
+        console.log("WebSocket connection established.");
+        status.textContent = "Connected";
+        status.classList.remove("status-disconnected");
+        status.classList.add("status-connected");
+      };
+      socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        status.textContent = "Error";
+        status.classList.remove("status-connected");
+        status.classList.add("status-disconnected");
+      };
+      socket.onclose = () => {
+        console.log("WebSocket closed");
+        status.textContent = "Disconnected";
+        status.classList.remove("status-connected");
+        status.classList.add("status-disconnected");
+      };
+      socket.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.command === "forces") {
+            console.log(`Received forces: ${data.forces}`);
+            const [fl, fr, rl, rr] = data.forces;
+            updateForces(fl, fr, rl, rr);
+          } else if (data.command === "gesture") {
+            console.log(`Confirmed gesture: ${data.gesture}`);
+          } else if (data.command === "gesture_update") {
+            detectedGestureSpan.textContent = `Detected Gesture: ${data.detected_gesture} (inference time: ${data.inference_time}ms)`;
+            matchedGestureSpan.textContent = `Matched Gesture: ${data.matched_gesture} (${data.current_count}/${data.required_frames})`;
+            previousGestureSpan.textContent = `Previous Gesture: ${data.previous_gesture}`;
+            if (
+              data.matched_gesture === "unknown" ||
+              data.matched_gesture === "none" ||
+              data.current_count < data.required_frames
+            ) {
+              matchedGestureSpan.classList.remove("gesture-complete");
+              matchedGestureSpan.classList.add("gesture-incomplete");
+            } else {
+              matchedGestureSpan.classList.remove("gesture-incomplete");
+              matchedGestureSpan.classList.add("gesture-complete");
+            }
+          } else if (data.command === "mode_update") {
+            console.log(`Received mode update: ${data.mode}`);
+            let modeText = "";
+            switch (data.mode) {
+              case "follower":
+                modeText = "Follower Mode";
+                break;
+              case "gesture":
+                modeText = "Gesture Mode";
+                break;
+              case "inactive":
+                modeText = "Inactive";
+                break;
+              case "not_ready":
+                modeText = "Not in Range";
+                break;
+              default:
+                modeText = "Unknown Mode";
+            }
+            modeStatus.textContent = modeText;
+            modeStatus.className = ""; // Clear previous mode classes
+            modeStatus.classList.add(`mode-${data.mode}`);
+          }
+        } catch (error) {
+          console.error("Error parsing WebSocket message:", error);
+        }
+      };
+
+      // Model configurations
+      const modelConfigs = {
+        hand: {
+          instance: new Hands({
+            locateFile: (file) =>
+              `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
+          }),
+          options: {
+            maxNumHands: 2,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5,
+          },
+          connections: HAND_CONNECTIONS,
+          landmarkKey: "multiHandLandmarks",
+        },
+        pose: {
+          instance: new Pose({
+            locateFile: (file) =>
+              `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
+          }),
+          options: {
+            modelComplexity: 1,
+            smoothLandmarks: true,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5,
+          },
+          connections: POSE_CONNECTIONS,
+          landmarkKey: "poseLandmarks",
+        },
+        face: {
+          instance: new FaceMesh({
+            locateFile: (file) =>
+              `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
+          }),
+          options: {
+            maxNumFaces: 1,
+            refineLandmarks: true,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5,
+          },
+          connections: FACEMESH_CONTOURS,
+          landmarkKey: "multiFaceLandmarks",
+        },
+      };
+
+      let activeModel = null;
+      let isRecording = false;
+      let recordedData = [];
+      let lastCaptureTime = 0;
+
+      // Force plot configuration
+      const forceWidth = forceCanvas.width;
+      const forceHeight = forceCanvas.height;
+      let yMin = -2;
+      let yMax = 2;
+      let xTime = 2;
+      const sampleRate = 100;
+      let historyLength = xTime * sampleRate;
+      let forceHistory = {
+        fl: new Array(historyLength).fill(0),
+        fr: new Array(historyLength).fill(0),
+        rl: new Array(historyLength).fill(0),
+        rr: new Array(historyLength).fill(0),
+      };
+      const colors = {
+        fl: "red",
+        fr: "green",
+        rl: "blue",
+        rr: "purple",
+      };
+
+      // Load labels from JSON
+      async function loadLabels() {
+        try {
+          const response = await fetch("labels.json");
+          if (!response.ok) throw new Error("Failed to load labels.json");
+          const labels = await response.json();
+          console.log("Labels loaded:", labels);
+          Object.keys(modelConfigs).forEach((model) => {
+            const option = document.createElement("option");
+            option.value = model;
+            option.textContent =
+              model.charAt(0).toUpperCase() + model.slice(1) + " Detection";
+            modelSelector.appendChild(option);
+          });
+          modelSelector.addEventListener("change", () => {
+            switchModel(modelSelector.value);
+            updateLabelOptions(labels[modelSelector.value]);
+          });
+          // Set default model to pose
+          modelSelector.value = "pose";
+          updateLabelOptions(labels["pose"]);
+          switchModel("pose");
+        } catch (error) {
+          console.error("Error loading labels:", error);
+        }
+      }
+
+      function updateLabelOptions(labelList) {
+        labelSelector.innerHTML = "";
+        labelList.forEach((label) => {
+          const option = document.createElement("option");
+          option.value = label;
+          option.textContent = label;
+          labelSelector.appendChild(option);
+        });
+      }
+
+      function switchModel(modelType) {
+        console.log("Switching to", modelType);
+        if (activeModel) activeModel.onResults(null);
+        activeModel = modelConfigs[modelType].instance;
+        activeModel.setOptions(modelConfigs[modelType].options);
+        activeModel.onResults((results) => onResults(results, modelType));
+        console.log("Model switched");
+      }
+
+      function onResults(results, modelType) {
+        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        canvasCtx.drawImage(
+          results.image,
+          0,
+          0,
+          canvasElement.width,
+          canvasElement.height
+        );
+
+        let landmarkData = null;
+        let backendLandmarkData = null;
+        const landmarkKey = modelConfigs[modelType].landmarkKey;
+        const landmarks = results[landmarkKey];
+
+        if (landmarks) {
+          console.log("Landmarks detected:", landmarks);
+          if (modelType === "hand") {
+            landmarks.forEach((landmarkSet) => {
+              drawConnectors(
+                canvasCtx,
+                landmarkSet,
+                modelConfigs[modelType].connections,
+                { color: "#FFFFFF", lineWidth: 4 }
+              );
+              drawLandmarks(canvasCtx, landmarkSet, {
+                color: "#FF0000",
+                lineWidth: 2,
+                radius: 2,
+              });
+            });
+            landmarkData = landmarks.map((landmarkSet) =>
+              landmarkSet.map((landmark) => ({
+                x: landmark.x,
+                y: landmark.y,
+                z: landmark.z,
+                visibility: landmark.visibility || 0.0,
+              }))
+            );
+            backendLandmarkData = landmarkData;
+          } else {
+            let landmarkSet =
+              modelType === "pose"
+                ? landmarks
+                : landmarks.length > 0
+                ? landmarks[0]
+                : null;
+            if (landmarkSet) {
+              drawConnectors(
+                canvasCtx,
+                landmarkSet,
+                modelConfigs[modelType].connections,
+                { color: "#FFFFFF", lineWidth: modelType === "face" ? 0.5 : 4 }
+              );
+              drawLandmarks(canvasCtx, landmarkSet, {
+                color: "#FF0000",
+                lineWidth: modelType === "face" ? 0.5 : 2,
+                radius: modelType === "face" ? 0.5 : 2,
+              });
+              landmarkData = landmarkSet.map((landmark) => ({
+                x: landmark.x,
+                y: landmark.y,
+                z: landmark.z,
+                visibility: landmark.visibility || 0.0,
+              }));
+              backendLandmarkData = landmarkData;
+            }
+          }
+        } else {
+          console.log("No landmarks detected");
+        }
+
+        if (isRecording && landmarkData !== null && landmarkData.length > 0) {
+          const now = Date.now();
+          const interval = parseInt(frequencySelector.value);
+          if (now - lastCaptureTime >= interval) {
+            recordedData.push({
+              type: modelType,
+              label: labelSelector.value,
+              landmarks: landmarkData,
+              timestamp: now,
+            });
+            lastCaptureTime = now;
+            status.textContent = `Recording (${recordedData.length} samples)`;
+            status.classList.remove("status-connected", "status-disconnected");
+            status.classList.add("status-connected");
+            canvasElement.classList.add("recording-hint");
+            setTimeout(
+              () => canvasElement.classList.remove("recording-hint"),
+              200
+            );
+          }
+        }
+
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(
+            JSON.stringify({ type: modelType, landmarks: backendLandmarkData })
+          );
+        }
+      }
+
+      async function startRecordingWithCountdown() {
+        recordBtn.disabled = true;
+        countdownElement.style.display = "block";
+        for (let i = 3; i > 0; i--) {
+          countdownElement.textContent = i;
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+        countdownElement.style.display = "none";
+        recordBtn.disabled = false;
+        isRecording = true;
+        recordBtn.textContent = "Stop Recording";
+        saveBtn.disabled = false;
+        status.textContent = "Recording (0 samples)";
+        status.classList.remove("status-disconnected");
+        status.classList.add("status-connected");
+        lastCaptureTime = 0;
+      }
+
+      recordBtn.addEventListener("click", () => {
+        if (!isRecording) {
+          startRecordingWithCountdown();
+        } else {
+          isRecording = false;
+          recordBtn.textContent = "Start Recording";
+          status.textContent = `Stopped (${recordedData.length} samples recorded)`;
+          status.classList.remove("status-disconnected");
+          status.classList.add("status-connected");
+        }
+      });
+
+      saveBtn.addEventListener("click", () => {
+        if (recordedData.length > 0) {
+          const timestamp = Date.now();
+          const filename = `collected_data_${timestamp}.json`;
+          const blob = new Blob([JSON.stringify(recordedData, null, 2)], {
+            type: "application/json",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = filename;
+          a.click();
+          URL.revokeObjectURL(url);
+          recordedData = [];
+          status.textContent = "Not recording";
+          status.classList.remove("status-disconnected");
+          status.classList.add("status-connected");
+          saveBtn.disabled = true;
+        }
+      });
+
+      const camera = new Camera(videoElement, {
+        onFrame: async () => {
+          if (activeModel) {
+            try {
+              await activeModel.send({ image: videoElement });
+            } catch (error) {
+              console.error(`Error processing ${modelSelector.value}:`, error);
+            }
+          }
+        },
+        width: 640,
+        height: 360,
+      });
+
+      // Force plot functions
+      function updateForces(fl, fr, rl, rr) {
+        forceHistory.fl.shift();
+        forceHistory.fr.shift();
+        forceHistory.rl.shift();
+        forceHistory.rr.shift();
+        forceHistory.fl.push(fl);
+        forceHistory.fr.push(fr);
+        forceHistory.rl.push(rl);
+        forceHistory.rr.push(rr);
+        console.log(
+          `Updated forceHistory: fl=${fl}, fr=${fr}, rl=${rl}, rr=${rr}`
+        );
+      }
+
+      function updateRange() {
+        yMin = parseFloat(document.getElementById("yMin").value);
+        yMax = parseFloat(document.getElementById("yMax").value);
+        if (yMax <= yMin) {
+          yMax = yMin + 0.1;
+          document.getElementById("yMax").value = yMax;
+        }
+      }
+
+      function updateTime() {
+        xTime = parseFloat(document.getElementById("xTime").value);
+        const newLength = Math.max(1, Math.round(xTime * sampleRate));
+        adjustHistoryLength(newLength);
+      }
+
+      function adjustHistoryLength(newLength) {
+        const currentLength = forceHistory.fl.length;
+        if (newLength > currentLength) {
+          const pad = new Array(newLength - currentLength).fill(0);
+          forceHistory.fl = pad.concat(forceHistory.fl);
+          forceHistory.fr = pad.concat(forceHistory.fr);
+          forceHistory.rl = pad.concat(forceHistory.rl);
+          forceHistory.rr = pad.concat(forceHistory.rr);
+        } else if (newLength < currentLength) {
+          forceHistory.fl = forceHistory.fl.slice(currentLength - newLength);
+          forceHistory.fr = forceHistory.fr.slice(currentLength - newLength);
+          forceHistory.rl = forceHistory.rl.slice(currentLength - newLength);
+          forceHistory.rr = forceHistory.rr.slice(currentLength - newLength);
+        }
+        historyLength = newLength;
+      }
+
+      function drawGrid() {
+        forceCtx.strokeStyle = "#ccc";
+        forceCtx.lineWidth = 0.5;
+        for (let y = 0; y <= forceHeight; y += forceHeight / 4) {
+          forceCtx.beginPath();
+          forceCtx.moveTo(0, y);
+          forceCtx.lineTo(forceWidth, y);
+          forceCtx.stroke();
+        }
+        const pixelsPerSecond = forceWidth / xTime;
+        for (let x = 0; x <= forceWidth; x += pixelsPerSecond) {
+          forceCtx.beginPath();
+          forceCtx.moveTo(x, 0);
+          forceCtx.lineTo(x, forceHeight);
+          forceCtx.stroke();
+        }
+        forceCtx.strokeStyle = "#666";
+        const zeroY = forceHeight - ((0 - yMin) / (yMax - yMin)) * forceHeight;
+        forceCtx.beginPath();
+        forceCtx.moveTo(0, zeroY);
+        forceCtx.lineTo(forceWidth, zeroY);
+        forceCtx.stroke();
+      }
+
+      function drawForceTrace() {
+        forceCtx.clearRect(0, 0, forceWidth, forceHeight);
+        drawGrid();
+        ["fl", "fr", "rl", "rr"].forEach((key) => {
+          forceCtx.beginPath();
+          forceCtx.strokeStyle = colors[key];
+          forceCtx.lineWidth = 2;
+          for (let i = 0; i < historyLength; i++) {
+            const force = forceHistory[key][i];
+            const x = (i / (historyLength - 1)) * forceWidth;
+            const y =
+              forceHeight - ((force - yMin) / (yMax - yMin)) * forceHeight;
+            if (i === 0) {
+              forceCtx.moveTo(x, y);
+            } else {
+              forceCtx.lineTo(x, y);
+            }
+          }
+          forceCtx.stroke();
+        });
+      }
+
+      function animate() {
+        drawForceTrace();
+        requestAnimationFrame(animate);
+      }
+
+      loadLabels();
+      camera
+        .start()
+        .then(() => console.log("Camera started"))
+        .catch((err) => console.error("Camera failed to start:", err));
+      animate();
+    </script>
+  </body>
+</html>
