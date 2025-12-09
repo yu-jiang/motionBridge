@@ -4,67 +4,67 @@
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 1
         },
         "250:000": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "251:000": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "252:000": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "253:000": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "254:000": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "000:252": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "000:253": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "000:254": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "000:255": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         },
         "242:000": {
             "motion": "none",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0
+            "fallback": 0
         }
     },
     "Celeste.exe": {
@@ -72,28 +72,28 @@
             "motion": "impulseHeave",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0,
+            "fallback": 0,
             "alias": "jump"
         },
         "102:102": {
             "motion": "gesture_dip",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0,
+            "fallback": 1,
             "alias": "climb"
         },
         "255:255": {
             "motion": "heaveDownHit",
             "behavior": "replace",
             "scale": 1,
-            "channel": 0,
+            "fallback": 2,
             "alias": "dash"
         },
         "012:012": {
             "motion": "carsfly_bass_effect1",
             "behavior": "replace",
             "scale": 1,
-            "channel": 1,
+            "fallback": 3,
             "alias": "menu"
         }
     }

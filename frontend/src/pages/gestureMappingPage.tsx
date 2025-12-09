@@ -39,7 +39,7 @@ export default function GestureMappingPage() {
 
   const handleFieldChange = (
     idx: number,
-    field: "motion" | "behavior" | "frames" | "channel",
+    field: "motion" | "behavior" | "frames" | "fallback",
     value: string | number
   ) => {
     setGestureMappings((prev) => {
@@ -138,7 +138,7 @@ export default function GestureMappingPage() {
                     <th>Motion</th>
                     <th>Behavior</th>
                     <th>Frames</th>
-                    <th>Channel</th>
+                    <th>Fallback #</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -194,11 +194,11 @@ export default function GestureMappingPage() {
                       <td>
                         <input
                           type="number"
-                          value={mapping.channel}
+                          value={mapping.fallback}
                           onChange={(e) =>
                             handleFieldChange(
                               idx,
-                              "channel",
+                              "fallback",
                               Number(e.target.value)
                             )
                           }

@@ -47,7 +47,7 @@ const VideoMappingEditor = ({
     motion: "",
     behavior: "replace",
     scale: 1,
-    channel: 0,
+    fallback: 0,
   });
 
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
@@ -164,7 +164,7 @@ const VideoMappingEditor = ({
         motion: nextMotionType.motion,
         behavior: nextMotionType.behavior,
         scale: nextMotionType.scale,
-        channel: nextMotionType.channel,
+        fallback: nextMotionType.fallback,
         duration: motionData.duration,
         magnitude: motionData.magnitude,
         color: motionData.color,
@@ -241,7 +241,7 @@ const VideoMappingEditor = ({
         motion: eventType.motion,
         behavior: eventType.behavior,
         scale: eventType.scale,
-        channel: eventType.channel,
+        fallback: eventType.fallback,
         duration: motionRes.data.duration,
         magnitude: motionRes.data.magnitude,
         color: motionRes.data.color,
@@ -354,7 +354,7 @@ const VideoMappingEditor = ({
       motion: videoEvent?.motion || "",
       behavior: videoEvent?.behavior || "replace",
       scale: videoEvent?.scale || 1,
-      channel: videoEvent?.channel || 0,
+      fallback: videoEvent?.fallback || 0,
     });
     setScrollTimeline(false);
   };
@@ -376,7 +376,7 @@ const VideoMappingEditor = ({
     navigate(`?name=${encodeURIComponent(name)}`);
   };
   const handleFieldChange = (
-    field: "motion" | "behavior" | "scale" | "channel",
+    field: "motion" | "behavior" | "scale" | "fallback",
     value: string | number
   ) => {
     setNextMotionType({
@@ -554,13 +554,13 @@ const VideoMappingEditor = ({
               max="1"
               step="0.01"
             />
-            <label htmlFor="channel">Channel: </label>
+            <label htmlFor="fallback">Fallback #: </label>
             <input
-              id="channel"
+              id="fallback"
               type="number"
-              value={nextMotionType.channel}
+              value={nextMotionType.fallback}
               onChange={(e) =>
-                handleFieldChange("channel", Number(e.target.value))
+                handleFieldChange("fallback", Number(e.target.value))
               }
               min="0"
               step="1"

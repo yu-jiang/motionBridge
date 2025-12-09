@@ -44,7 +44,8 @@ async def main(_mode="none", _target="none", silent=False):
         signal = (0, 0, 0, 0)
         if hasattr(hardware, 'shutdown'):
             hardware.shutdown()
-        elif target == "none":
+        
+        if target == "none":
             hardware = None
             send = lambda force: None
         elif target == "bridge":

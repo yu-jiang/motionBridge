@@ -36,7 +36,7 @@ def generate_sine_motion(src_motion):
     y = np.sin(2 * np.pi * frequency * t + phase)
     y = np.tile(y.reshape(-1, 1), (1, 4))  # replicate for 4 actuators
 
-    # Extract individual actuator channels
+    # Extract individual actuator fallbacks
     fl, fr, rl, rr = [y[:, i] for i in range(4)]
     if direction == 'heave':
         pass

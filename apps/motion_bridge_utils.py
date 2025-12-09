@@ -96,10 +96,10 @@ async def send_motion_data(motion_data, behavior, scale):
         except Exception as e:
             logger.info(f"Failed to send motion data to player: {e}")
 
-async def send_motion(motion, behavior, scale, channel):
+async def send_motion(motion, behavior, scale, fallback):
     motion_data = None
     if adapt_motion:
-        motion, behavior, scale, motion_data = adapt_motion(motion, behavior, scale, channel)
+        motion, behavior, scale, motion_data = adapt_motion(motion, behavior, scale, fallback)
     if not motion and motion_data:
         await send_motion_data(motion_data, behavior, scale)
         return

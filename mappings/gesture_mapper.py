@@ -26,14 +26,14 @@ class GestureMapper:
             if behavior not in BEHAVIORS:
                 behavior = "disable"
             frames = data.get("frames", 3)
-            channel = data.get("channel", 0)
+            fallback = data.get("fallback", 0)
             
             result.append({
                 "gesture": gesture,
                 "motion": motion,
                 "behavior": behavior,
                 "frames": frames,
-                "channel": channel
+                "fallback": fallback
             })
         return result
 
@@ -42,10 +42,10 @@ class GestureMapper:
         motion = data.get("motion", "none")
         behavior = data.get("behavior", "disable")
         frames = data.get("frames", 3)
-        channel = data.get("channel", 0)
-        return motion, behavior, frames, channel
+        fallback = data.get("fallback", 0)
+        return motion, behavior, frames, fallback
     
-    def update_mapping(self, gesture, motion, behavior, frames, channel):
+    def update_mapping(self, gesture, motion, behavior, frames, fallback):
         data = self.mapping.get(gesture, {})
         if not data:
             return "gesture"
@@ -54,5 +54,5 @@ class GestureMapper:
         data["motion"] = motion
         data["behavior"] = behavior
         data["frames"] = frames
-        data["channel"] = channel
+        data["fallback"] = fallback
         return None

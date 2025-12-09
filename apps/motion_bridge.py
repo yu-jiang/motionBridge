@@ -42,7 +42,7 @@ async def input_channel():
             logger.info(f"[Input: {client_id}] Received: {message}.")
             data = json.loads(message)
 
-            motion, behavior, scale, channel = None, None, None, None
+            motion, behavior, scale, fallback = None, None, None, None
             
             if "program" in data:
                 validate(instance=data, schema=hapticsInputSchema)
@@ -50,7 +50,7 @@ async def input_channel():
                 largeMotor = data["largeMotor"]
                 smallMotor = data["smallMotor"]
                 haptics = haptics_mapper.to_haptics(largeMotor=largeMotor, smallMotor=smallMotor)
-                motion, behavior, scale, channel = haptics_mapper.map_haptics(program=program, haptics=haptics)
+                motion, behavior, scale, fallback = haptics_mapper.map_haptics(program=program, haptics=haptics)
                 if not motion:
                     logger.info(f"[Input: {client_id}] New event detected. Now saving...")
                     haptics_mapper.add_mapping(program=program, haptics=haptics)
@@ -60,12 +60,12 @@ async def input_channel():
                 motion = data["motion"]
                 behavior = data["behavior"]
                 scale = data["scale"]
-                channel = data["channel"]
+                fallback = data["fallback"]
             elif "beat" in data:
-                motion, behavior, scale, channel = audio_mapper.map_audio()
+                motion, behavior, scale, fallback = audio_mapper.map_audio()
             
             if motion and behavior and scale:
-                await send_motion(motion, behavior, scale, channel)
+                await send_motion(motion, behavior, scale, fallback)
 
     except ValidationError as ve:
         logger.info(f"[Input: {client_id}] Validation Error: {ve.message}")
@@ -78,7 +78,7 @@ async def input_channel():
         logger.info(f"[Input: {client_id}] Disconnected.")
         await broadcast_status()
 
-# channel for the motion player
+# fallback for the motion player
 # may add authentication later
 @bridge.websocket("/player", endpoint="player_channel")
 async def player_channel():
@@ -290,10 +290,10 @@ async def haptics_mapping_api():
                 motion = entry["motion"]
                 behavior = entry["behavior"]
                 scale = entry["scale"]
-                channel = entry["channel"]
+                fallback = entry["fallback"]
                 alias = entry.get("alias", None)
                 error =  haptics_mapper.update_mapping(
-                    program, haptics, motion, behavior, scale, channel, alias
+                    program, haptics, motion, behavior, scale, fallback, alias
                 )
                 if error:
                     haptics_mapper.load_mapping()
@@ -336,8 +336,8 @@ async def gesture_mapping_api():
                 motion = entry["motion"]
                 behavior = entry["behavior"]
                 frames = entry["frames"]
-                channel = entry["channel"]
-                error = gesture_mapper.update_mapping(gesture, motion, behavior, frames, channel)
+                fallback = entry["fallback"]
+                error = gesture_mapper.update_mapping(gesture, motion, behavior, frames, fallback)
                 if error:
                     gesture_mapper.load_mapping()
                     return jsonify({"error": f"Invalid {error}. Gesture: {gesture}"}), 400

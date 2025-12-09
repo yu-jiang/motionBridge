@@ -202,8 +202,8 @@ async def jedi_channel():
                         if result == None:
                             continue # cannot recognize gesture from current landmarks
                         if result == matched_gesture: # gesture confirmed
-                            motion, behavior, _, channel = gesture_mapper.map_gesture(matched_gesture)
-                            await send_motion(motion, behavior, 1, channel)
+                            motion, behavior, _, fallback = gesture_mapper.map_gesture(matched_gesture)
+                            await send_motion(motion, behavior, 1, fallback)
                         else: # gesture indicates mode change
                             new_mode = result
                             await send_status_update(mode=new_mode)

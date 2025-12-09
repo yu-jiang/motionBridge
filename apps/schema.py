@@ -317,9 +317,9 @@ motionMappingSchema = {
         "motion": { "type": "string", "pattern": NAME_REGEX },
         "behavior": { "type": "string", "enum": BEHAVIORS },
         "scale": { "type": "number", "minimum": 0, "maximum": 1 },
-        "channel": { "type": "integer", "minimum": 0 },
+        "fallback": { "type": "integer", "minimum": 0 },
     },
-    "required": ["motion", "behavior", "scale", "channel"]
+    "required": ["motion", "behavior", "scale", "fallback"]
 }
 
 hapticsMappingSchema = {
@@ -335,10 +335,10 @@ hapticsMappingSchema = {
                     "motion": { "type": "string", "pattern": NAME_REGEX },
                     "behavior": { "type": "string", "enum": BEHAVIORS },
                     "scale": { "type": "number", "minimum": 0, "maximum": 1 },
-                    "channel": { "type": "integer", "minimum": 0 },
+                    "fallback": { "type": "integer", "minimum": 0 },
                     "alias": { "type": "string", "pattern": NAME_REGEX }
                 },
-                "required": ["haptics", "motion", "behavior", "scale", "channel"]
+                "required": ["haptics", "motion", "behavior", "scale", "fallback"]
             }
         }
     },
@@ -353,10 +353,10 @@ hapticsEntrySchema = {
         "motion": { "type": "string", "pattern": NAME_REGEX },
         "behavior": { "type": "string", "enum": BEHAVIORS },
         "scale": { "type": "number", "minimum": 0, "maximum": 1 },
-        "channel": { "type": "integer", "minimum": 0 },
+        "fallback": { "type": "integer", "minimum": 0 },
         "alias": { "type": "string", "pattern": NAME_REGEX }
     },
-    "required": ["program", "haptics", "motion", "behavior", "scale", "channel"]
+    "required": ["program", "haptics", "motion", "behavior", "scale", "fallback"]
 }
 
 videoEventSchema = {
@@ -366,14 +366,14 @@ videoEventSchema = {
         "motion": { "type": "string", "pattern": NAME_REGEX },
         "behavior": { "type": "string", "enum": BEHAVIORS },
         "scale": { "type": "number", "minimum": 0, "maximum": 1 },
-        "channel": { "type": "integer", "minimum": 0 },
+        "fallback": { "type": "integer", "minimum": 0 },
         "timeOffset": { "type": "number", "minimum": 0 },
         "magnitude": { "type": "integer", "minimum": 0, "maximum": MAX_MAGNITUDE },
         "duration": { "type": "number", "minimum": 0 },
         "color": { "type": "string", "pattern": COLOR_REGEX },
         "trackIndex": { "type": "integer", "minimum": 0 },
     },
-    "required": ["motion", "behavior", "scale", "channel", "timeOffset", "duration", "magnitude", "color"]
+    "required": ["motion", "behavior", "scale", "fallback", "timeOffset", "duration", "magnitude", "color"]
 }
 
 videoMappingSchema = {
@@ -404,9 +404,9 @@ gestureMappingSchema = {
         "motion": { "type": "string", "pattern": NAME_REGEX },
         "behavior": { "type": "string", "enum": BEHAVIORS },
         "frames": { "type": "integer", "minimum": 1 },
-        "channel": { "type": "integer", "minimum": 0 }
+        "fallback": { "type": "integer", "minimum": 0 }
     },
-    "required": ["gesture", "motion", "behavior", "frames", "channel"]
+    "required": ["gesture", "motion", "behavior", "frames", "fallback"]
 }
 
 gestureMappingsSchema = {

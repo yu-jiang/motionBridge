@@ -3,90 +3,90 @@
         "motion": "stop",
         "behavior": "replace",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "bow": {
         "motion": "nod_1",
         "behavior": "single",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "left_arm_out": {
         "motion": "cos_fl_12Hz",
         "behavior": "inherit",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "right_arm_out": {
         "motion": "cos_fr_12Hz",
         "behavior": "inherit",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "both_arms_out": {
         "motion": "gesture_dip",
         "behavior": "single",
         "frames": 5,
-        "channel": 0
+        "fallback": 0
     },
     "jump": {
         "motion": "jump001",
         "behavior": "single",
         "frames": 5,
-        "channel": 0
+        "fallback": 0
     },
     "wave": {
         "motion": "gesture_wave",
         "behavior": "inherit",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "heart": {
         "motion": "sinewave",
         "behavior": "inherit",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "clap": {
         "motion": "chirp_003",
         "behavior": "inherit",
         "frames": 4,
-        "channel": 0
+        "fallback": 0
     },
     "thumb_down": {
         "motion": "head_down",
         "behavior": "inherit",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "thumb_up": {
         "motion": "head_up",
         "behavior": "inherit",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "one_finger": {
         "motion": "nod_1",
         "behavior": "single",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "two_fingers": {
         "motion": "nod_2",
         "behavior": "single",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "three_fingers": {
         "motion": "nod_3",
         "behavior": "single",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     },
     "smile": {
         "motion": "sinewave",
         "behavior": "inherit",
         "frames": 3,
-        "channel": 0
+        "fallback": 0
     }
 }

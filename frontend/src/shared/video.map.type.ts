@@ -5,7 +5,7 @@ export interface VideoEvent {
   motion: string;
   behavior: string;
   scale: number;
-  channel: number;
+  fallback: number;
   duration: number;
   color: string;
   magnitude: number;
@@ -17,7 +17,7 @@ export const videoEventSchema = z.object({
   motion: z.string().min(1),
   behavior: z.string().min(1),
   scale: z.number().min(0),
-  channel: z.number().min(0),
+  fallback: z.number().min(0),
   duration: z.number().min(0),
   color: z.string().regex(/^#([0-9A-Fa-f]{6})$/),
   magnitude: z.number().min(0),

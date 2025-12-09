@@ -20,7 +20,7 @@ class AudioMapper:
             "motion": "none",
             "behavior": "disable",
             "scale": 1.0,
-            "channel": 0
+            "fallback": 0
         }
     
     def load_mapping(self):
@@ -49,5 +49,5 @@ class AudioMapper:
         if self.flip:
             scale *= self.sign
             self.sign *= -1
-        channel = self.mapping.get("channel", 0)
-        return motion, behavior, scale, channel
+        fallback = self.mapping.get("fallback", 0)
+        return motion, behavior, scale, fallback

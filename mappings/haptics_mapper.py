@@ -47,10 +47,10 @@ class HapticsMapper:
             "motion": "none",
             "behavior": "replace",
             "scale": 0.5,
-            "channel": 0
+            "fallback": 0
         })
     
-    def update_mapping(self, program, haptics, motion, behavior, scale, channel, alias=None):
+    def update_mapping(self, program, haptics, motion, behavior, scale, fallback, alias=None):
         if motion not in load_motion_lib():
             return "motion"
         
@@ -64,7 +64,7 @@ class HapticsMapper:
         data["motion"] = motion
         data["behavior"] = behavior
         data["scale"] = scale
-        data["channel"] = channel
+        data["fallback"] = fallback
         if alias:
             data["alias"] = alias
         
@@ -85,5 +85,5 @@ class HapticsMapper:
         motion = data.get("motion")
         behavior = data.get("behavior")
         scale = data.get("scale")
-        channel = data.get("channel", 0)
-        return motion, behavior, scale, channel
+        fallback = data.get("fallback", 0)
+        return motion, behavior, scale, fallback

@@ -6,7 +6,7 @@ export const motionPayloadSchema = z.object({
   motion: z.string().regex(NAME_REGEX),
   behavior: z.string(),
   scale: z.float32(),
-  channel: z.number().int().min(0),
+  fallback: z.number().int().min(0),
 });
 
 export type RenamePayload = z.infer<typeof renamePayloadSchema>;
@@ -24,7 +24,7 @@ export const hapticsMappingSchema = z.object({
       motion: z.string().regex(NAME_REGEX).regex(NAME_REGEX),
       behavior: z.string(),
       scale: z.number().min(0).max(1),
-      channel: z.number().int().min(0),
+      fallback: z.number().int().min(0),
       alias: z.string().regex(NAME_REGEX).optional(),
     })
   ),
@@ -37,7 +37,7 @@ export const hapticsEntrySchema = z.object({
   motion: z.string().regex(NAME_REGEX).regex(NAME_REGEX),
   behavior: z.string(),
   scale: z.number().min(0).max(1),
-  channel: z.number().int().min(0),
+  fallback: z.number().int().min(0),
   alias: z.string().regex(NAME_REGEX).optional(),
 });
 
@@ -46,7 +46,7 @@ export const gestureMappingSchema = z.object({
   gesture: z.string(),
   motion: z.string().regex(NAME_REGEX),
   behavior: z.string(),
-  channel: z.number().int().min(0),
+  fallback: z.number().int().min(0),
   frames: z.number().int().min(1),
 });
 

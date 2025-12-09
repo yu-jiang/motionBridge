@@ -7,7 +7,7 @@
       "motion": "gesture_wave",
       "behavior": "inherit",
       "scale": 1,
-      "channel": 1,
+      "fallback": 1,
       "duration": 2.44,
       "magnitude": 500,
       "color": "#D95319",
@@ -15,7 +15,7 @@
     },
     {
       "behavior": "replace",
-      "channel": 0,
+      "fallback": 0,
       "color": "#522F0A",
       "duration": 1,
       "magnitude": 300,
@@ -26,7 +26,7 @@
     },
     {
       "behavior": "replace",
-      "channel": 0,
+      "fallback": 0,
       "color": "#478CF5",
       "duration": 1,
       "magnitude": 600,
@@ -37,7 +37,7 @@
     },
     {
       "behavior": "replace",
-      "channel": 0,
+      "fallback": 0,
       "color": "#D0E720",
       "duration": 1,
       "magnitude": 600,
@@ -48,7 +48,7 @@
     },
     {
       "behavior": "replace",
-      "channel": 0,
+      "fallback": 0,
       "color": "#00CCCC",
       "duration": 0.04,
       "magnitude": 300,

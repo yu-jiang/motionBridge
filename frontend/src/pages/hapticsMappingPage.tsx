@@ -69,7 +69,7 @@ export default function HapticsMappingPage() {
 
   const handleFieldChange = (
     idx: number,
-    field: "motion" | "behavior" | "scale" | "alias" | "channel",
+    field: "motion" | "behavior" | "scale" | "alias" | "fallback",
     value: string | number
   ) => {
     if (!selectedMapping) return;
@@ -204,7 +204,7 @@ export default function HapticsMappingPage() {
                           <th>Alias</th>
                           <th>Behavior</th>
                           <th>Scale</th>
-                          <th>Channel</th>
+                          <th>Fallback #</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -273,11 +273,11 @@ export default function HapticsMappingPage() {
                             <td>
                               <input
                                 type="number"
-                                value={entry.channel}
+                                value={entry.fallback}
                                 onChange={(e) =>
                                   handleFieldChange(
                                     index,
-                                    "channel",
+                                    "fallback",
                                     Number(e.target.value)
                                   )
                                 }

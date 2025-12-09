@@ -46,7 +46,7 @@ export default function AudioMappingEditor() {
     navigate(dest);
   };
   const handleFieldChange = (
-    field: "motion" | "behavior" | "scale" | "channel",
+    field: "motion" | "behavior" | "scale" | "fallback",
     value: string | number
   ) => {
     if (!motionMapping) return;
@@ -148,12 +148,12 @@ export default function AudioMappingEditor() {
             />
           </div>
           <div>
-            <label>Channel: </label>
+            <label>Fallback #: </label>
             <input
               type="number"
-              value={motionMapping.channel}
+              value={motionMapping.fallback}
               onChange={(e) =>
-                handleFieldChange("channel", Number(e.target.value))
+                handleFieldChange("fallback", Number(e.target.value))
               }
               step="1"
               min="0"
