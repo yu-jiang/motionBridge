@@ -216,6 +216,14 @@ Modes:
 - event (play motions in response to triggers)
 - live (map continuous signals to motion in real time)
 
+### Playing with MotionBridge
+
+There are builtin outputs that you can play with.
+
+- Start the MotionPlayer and set target to bridge
+- Click the arrow box icon next to the Output tab in the navbar and two simulation graphs will show up.
+- Go to a random input page (video is the fastest one I think) and feed MotionBridge with inputs. The simulation graphs should move when an event occurs.
+
 ### Input Drivers
 
 For some inputs or outputs, you need some extra steps to set up a driver before using them.

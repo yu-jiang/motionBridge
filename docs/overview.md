@@ -1,0 +1,1 @@
+MotionBridge is a software that aims to create cinematic experiences synchronizing different digital media with motion.

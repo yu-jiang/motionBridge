@@ -1,0 +1,3 @@
+- You need to connect your arduino board with a wire.
+- Select arduino uno as the target in the software.
+- Update the COM port to match your Arduino Uno in `output/arduino_driver.py`
